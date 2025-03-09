@@ -1,19 +1,35 @@
 function updateLosAnglesTime() {
   //LosAngles
   let losAnglesElement = document.querySelector("#los-an");
-  let losAnglesDateElement = document.querySelector(".date ");
-  let losAnglesTimeElement = document.querySelector(".time ");
-  let losAnglesTime = moment().tz("America/Los_Angeles");
-  losAnglesDateElement.innerHTML = losAnglesTime.format("MMM Do YYYY");
-  losAnglesTimeElement.innerHTML = losAnglesTime.format(
-    "h:mm:ss [<small>]A[</small>]"
-  );
+  if (osAnglesElement) {
+    let losAnglesDateElement = document.querySelector(".date ");
+    let losAnglesTimeElement = document.querySelector(".time ");
+    let losAnglesTime = moment().tz("America/Los_Angeles");
+    losAnglesDateElement.innerHTML = losAnglesTime.format("MMM Do YYYY");
+    losAnglesTimeElement.innerHTML = losAnglesTime.format(
+      "h:mm:ss [<small>]A[</small>]"
+    );
+  }
 }
 setInterval(updateLosAnglesTime, 1000);
-//PAris
-let ParisElement = document.querySelector("#paris");
-let ParisDateElement = document.querySelector(".date");
-let parisTimeElement = document.querySelector(".time");
-let parisTime = moment().tz("Europe/Paris");
-ParisDateElement.innerHTML = parisTime.format("MMM Do YYYY");
-parisTimeElement.innerHTML = parisTime.format("h:mm:ss [<small>]A[</small>]");
+
+function updatecity(event) {
+  let cityTimeZone = event.target.value;
+  let cityName = cityTimeZone.replace("_", " ").split("/")[1];
+  let cityTime = moment().tz(cityTimeZone);
+  let citiesElement = document.querySelector("#cities");
+  citiesElement.innerHTML = `
+  <div class="city" id="los-an">
+          <div>
+            <h2>${cityName}</h2>
+            <div class="date">${cityTime.format("MMM Do YYYY")}</div>
+          </div>
+          <div class="time">${cityTime.format(
+            "h:mm:ss"
+          )}<small>${cityTime.format("A")}</small></div>
+        </div>
+  
+  `;
+}
+let citiesSelectElement = document.querySelector("#city");
+citiesSelectElement.addEventListener("change", updatecity);
